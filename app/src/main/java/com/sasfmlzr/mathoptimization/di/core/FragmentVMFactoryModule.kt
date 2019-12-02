@@ -41,4 +41,10 @@ internal abstract class FragmentVMFactoryModule {
     @IntoMap
     @ViewModelKey(ZolotoFragmentVM::class)
     internal abstract fun bindZolotoVM(VM: ZolotoFragmentVM): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FunctionDichotomyFragmentVM::class)
+    internal abstract fun bindDichotomyVM(VM: FunctionDichotomyFragmentVM): ViewModel
+
 }

@@ -5,7 +5,14 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/darkGray</item>
+        <item name="android:editTextStyle">@style/editTextStyle</item>
+    </style>
+
+    <style name="editTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/edittext_selector</item>
+        <item name="android:textCursorDrawable">@drawable/edittext_cursor</item>
+        <item name="android:textColor">@color/darkGray</item>
     </style>
 
 </resources>
