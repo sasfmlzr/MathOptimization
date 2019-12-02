@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navStartFragment">
+
+
+    <fragment
+        android:id="@+id/navStartFragment"
+        android:name="com.sasfmlzr.mathoptimization.fragment.FunctionFragment"
+        android:label="StartFragment">
+
+        <argument
+            android:name="refreshMovies"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/actionShowMovieFragment"
+            app:destination="@id/navDihotomyFragment"
+            app:popUpTo="@+id/navDihotomyFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navDihotomyFragment"
+        android:name="com.sasfmlzr.mathoptimization.fragment.DihotomyFragment"
+        android:label="DihotomyFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navFibonachiFragment"
+        android:name="com.sasfmlzr.mathoptimization.fragment.FibonachiFragment"
+        android:label="FibonachiFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navUnimodalFragment"
+        android:name="com.sasfmlzr.mathoptimization.fragment.UnimodalFragment"
+        android:label="FibonachiFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navZolotoFragment"
+        android:name="com.sasfmlzr.mathoptimization.fragment.ZolotoFragment"
+        android:label="FibonachiFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph">
+    </fragment>
+
+</navigation>
