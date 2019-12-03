@@ -1,6 +1,7 @@
 package com.sasfmlzr.mathoptimization.fragment
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,19 +28,24 @@ class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
         super.onCreateView(inflater, container, savedInstanceState)
         binding.viewModel = viewModel
 
-        binding.intervalMin.edit_text.setOnFocusChangeListener { v, hasFocus ->
+        binding.enterFunction.edit_text.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus) {
-                binding.intervalMin.showError("Something is wrong")
+                binding.enterFunction.showError("Something is wrong")
             } else {
-                binding.intervalMin.hideError()
+                binding.enterFunction.hideError()
             }
         }
+
+        binding.intervalMin.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER)
+        binding.intervalMax.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER)
+        binding.epsilum.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER)
+        binding.ldop.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER)
 
         return binding.root
     }
 
     private fun sendData(){
-        val function = binding.enterFunction.text
+        //val function = binding.enterFunction.text
         val intervalMin = binding.intervalMin
         val intervalMax = binding.intervalMax
         val epsilum = binding.epsilum

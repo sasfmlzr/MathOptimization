@@ -4,21 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.sasfmlzr.mathoptimization.R
 import com.sasfmlzr.mathoptimization.architecture.BaseFragment
-import com.sasfmlzr.mathoptimization.databinding.FragmentDihotomyBinding
-import com.sasfmlzr.mathoptimization.databinding.FragmentFibonachiBinding
+import com.sasfmlzr.mathoptimization.databinding.FragmentFibonacciBinding
 import com.sasfmlzr.mathoptimization.di.core.FragmentComponent
 import com.sasfmlzr.mathoptimization.di.core.Injector
 import com.sasfmlzr.mathoptimization.matchParser.MatchParser
 import java.lang.RuntimeException
 
-class FibonachiFragment:  BaseFragment<FibonachiFragmentVM,
-        FragmentFibonachiBinding>(FibonachiFragmentVM::class) {
+class FibonacciFragment:  BaseFragment<FibonacciFragmentVM,
+        FragmentFibonacciBinding>(FibonacciFragmentVM::class) {
 
-    override fun getLayoutId() = R.layout.fragment_fibonachi
+    override fun getLayoutId() = R.layout.fragment_fibonacci
 
     override fun inject(component: FragmentComponent) = Injector.viewComponent().inject(this)
 

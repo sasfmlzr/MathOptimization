@@ -32,10 +32,14 @@ class CustomEditTextView @JvmOverloads constructor(
     }
 
     fun hideError() {
-        binder.errorIcon.visibility = View.GONE
-        binder.errorText.visibility = View.GONE
+        binder.errorIcon.visibility = View.INVISIBLE
+        binder.errorText.visibility = View.INVISIBLE
 
         binder.editText.isError = false
         binder.editText.refreshDrawableState()
+    }
+
+    fun setInputType(inputType: Int) {
+        binder.editText.inputType = inputType
     }
 }

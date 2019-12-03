@@ -13,6 +13,7 @@ import com.sasfmlzr.mathoptimization.di.core.FragmentComponent
 import com.sasfmlzr.mathoptimization.di.core.Injector
 import com.sasfmlzr.mathoptimization.matchParser.MatchParser
 import java.lang.RuntimeException
+import kotlin.math.roundToLong
 
 class DihotomyFragment :  BaseFragment<DihotomyFragmentVM,
         FragmentDihotomyBinding>(DihotomyFragmentVM::class){
@@ -63,12 +64,12 @@ class DihotomyFragment :  BaseFragment<DihotomyFragmentVM,
                 okruglenie = Math.round(y * 1000).toDouble() / 1000
                 binding.textView3!!.text =
                     binding.textView3!!.text.toString() + "\n" + "y[" + j + "]=" + okruglenie
-                okruglenie = Math.round(z * 1000).toDouble() / 1000
+                okruglenie = (z * 1000).roundToLong().toDouble() / 1000
                 binding.textView3!!.text =
                     binding.textView3!!.text.toString() + "\n" + "z[" + j + "]=" + okruglenie
                 println("y[$j] = $y")
                 println("z[$j] = $z")
-                jj = jj + 2
+                jj += 2
                 x = y
                 p.setVariable("x", x)
                 vivod = formula1[i] + "=" + p.parse(formula1[i])

@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/navFibonachiFragment"
-        android:name="com.sasfmlzr.mathoptimization.fragment.FibonachiFragment"
+        android:name="com.sasfmlzr.mathoptimization.fragment.FibonacciFragment"
         android:label="FibonachiFragment"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph">

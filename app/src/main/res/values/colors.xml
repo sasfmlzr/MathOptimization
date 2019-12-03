@@ -9,4 +9,13 @@
     <color name="gray">#A4A4A4</color>
     <color name="darkGray">#545454</color>
     <color name="blue">#45A4FF</color>
+    <color name="background">#1F2A66</color>
+    <color name="backgroundDark">#030811</color>
+
+    <color name="editTextBackground">#0D1254</color>
+    <color name="asd">#3F4041</color>
+
+    <color name="selectedText">#FDFDFE</color>
+    <color name="unselectedText">#A0A6B1</color>
+
 </resources>

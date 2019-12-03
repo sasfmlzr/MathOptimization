@@ -8,7 +8,7 @@ import com.sasfmlzr.mathoptimization.fragment.*
 @Subcomponent(modules = [FragmentModule::class, FragmentVMFactoryModule::class])
 interface FragmentComponent {
     fun inject(fragment: DihotomyFragment)
-    fun inject(fragment: FibonachiFragment)
+    fun inject(fragment: FibonacciFragment)
     fun inject(fragment: FunctionFragment)
     fun inject(fragment: FunctionDichotomyFragment)
     fun inject(fragment: UnimodalFragment)

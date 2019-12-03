@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,8 +9,65 @@
             type="com.sasfmlzr.mathoptimization.fragment.FunctionFragmentVM" />
     </data>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/main_pager"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:id="@+id/dichotomy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Dichotomy"
+            android:textColor="@color/selectedText"
+            app:layout_constraintEnd_toStartOf="@id/fibonacci"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fibonacci"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Fibonacci"
+            android:textColor="@color/unselectedText"
+            app:layout_constraintEnd_toStartOf="@id/golden"
+            app:layout_constraintStart_toEndOf="@id/dichotomy"
+            app:layout_constraintTop_toTopOf="@id/dichotomy" />
+
+        <TextView
+            android:id="@+id/golden"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Golden"
+            android:textColor="@color/unselectedText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fibonacci"
+            app:layout_constraintTop_toTopOf="@id/dichotomy" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.8"
+            android:background="@drawable/divider_gradient"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dichotomy" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/main_pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -24,8 +24,8 @@ internal abstract class FragmentVMFactoryModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(FibonachiFragmentVM::class)
-    internal abstract fun bindFibonachiVM(VM: FibonachiFragmentVM): ViewModel
+    @ViewModelKey(FibonacciFragmentVM::class)
+    internal abstract fun bindFibonachiVM(VM: FibonacciFragmentVM): ViewModel
 
     @Binds
     @IntoMap

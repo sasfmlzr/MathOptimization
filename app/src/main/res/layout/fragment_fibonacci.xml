@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.sasfmlzr.mathoptimization.fragment.FibonachiFragmentVM" />
+            type="com.sasfmlzr.mathoptimization.fragment.FibonacciFragmentVM" />
     </data>
 
     <RelativeLayout
