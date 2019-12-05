@@ -1,9 +1,7 @@
 package com.sasfmlzr.mathoptimization.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.Navigation
-import com.sasfmlzr.mathoptimization.fragment.FunctionFragment
 import com.sasfmlzr.mathoptimization.R
 import com.sasfmlzr.mathoptimization.architecture.BaseActivity
 import com.sasfmlzr.mathoptimization.databinding.ActivityMainBinding
@@ -17,7 +15,6 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main) :
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
-
     }
 
     override fun onSupportNavigateUp() =

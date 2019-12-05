@@ -2,15 +2,23 @@ package com.sasfmlzr.mathoptimization.fragment
 
 import android.os.Bundle
 import android.text.InputType
+import android.text.InputType.TYPE_NUMBER_FLAG_SIGNED
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.lifecycleScope
 import com.sasfmlzr.mathoptimization.R
 import com.sasfmlzr.mathoptimization.architecture.BaseFragment
+import com.sasfmlzr.mathoptimization.architecture.OnSwipeTouchListener
+import com.sasfmlzr.mathoptimization.databinding.FragmentDihotomyBinding
 import com.sasfmlzr.mathoptimization.databinding.FragmentFunctionDichotomyBinding
 import com.sasfmlzr.mathoptimization.di.core.FragmentComponent
 import com.sasfmlzr.mathoptimization.di.core.Injector
+import kotlinx.android.synthetic.main.fragment_function.*
+import kotlinx.android.synthetic.main.fragment_function_dichotomy.*
 import kotlinx.android.synthetic.main.view_edit_text.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,6 +27,8 @@ import kotlinx.coroutines.launch
 
 class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
         FragmentFunctionDichotomyBinding>(FunctionDichotomyFragmentVM::class) {
+
+    private lateinit var animationJob: Job
 
     override fun getLayoutId() = R.layout.fragment_function_dichotomy
 
@@ -31,40 +41,72 @@ class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
         super.onCreateView(inflater, container, savedInstanceState)
         binding.viewModel = viewModel
 
-        binding.enterFunction.edit_text.setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus) {
-                binding.enterFunction.showError("Something is wrong")
-            } else {
-                binding.enterFunction.hideError()
-            }
-        }
-
-        binding.intervalMin.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER)
-        binding.intervalMax.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER)
-        binding.epsilum.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER)
-        binding.ldop.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER)
+        binding.intervalMin.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER + TYPE_NUMBER_FLAG_SIGNED)
+        binding.intervalMax.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER + TYPE_NUMBER_FLAG_SIGNED)
+        binding.epsilum.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER + TYPE_NUMBER_FLAG_SIGNED)
+        binding.ldop.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER + TYPE_NUMBER_FLAG_SIGNED)
 
         showAnimation()
-
+        parentFragmentManager.setupForAccessibility()
+        binding.scroll.setOnTouchListener(specificGestureListener)
         return binding.root
     }
 
-    private fun sendData(){
-        //val function = binding.enterFunction.text
-        val intervalMin = binding.intervalMin
-        val intervalMax = binding.intervalMax
-        val epsilum = binding.epsilum
-        val ldop = binding.ldop
-        val isMax = binding.maxx
+    private fun sendData() {
+        try {
+            val function = binding.enterFunction.edit_text.text.toString()
+            val intervalMin = binding.intervalMin.text.toString().toDouble()
+            val intervalMax = binding.intervalMax.text.toString().toDouble()
+            val epsilon = binding.epsilum.text.toString().toDouble()
+            val ldop = binding.ldop.text.toString().toDouble()
+            val isMax = binding.maxx.isChecked
 
+
+
+            parentFragmentManager.beginTransaction()
+                .replace(
+                   binding.root.id,
+                    DihotomyFragment.newInstance(
+                        function,
+                        intervalMin,
+                        intervalMax,
+                        epsilon,
+                        ldop,
+                        isMax
+                    ),
+                    null
+                )
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(null)
+                .commit()
+        } catch (e: Exception) {
+
+        }
     }
 
+    private fun FragmentManager.setupForAccessibility() {
+        addOnBackStackChangedListener {
+            val lastFragmentWithView = fragments.last { it.view != null }
+            for (fragment in fragments) {
+                if (fragment == lastFragmentWithView) {
+                    if(fragment is FunctionDichotomyFragment) {
+                        fragment.container?.visibility = View.VISIBLE
+                    }
+
+                } else {
+                    if(fragment is FunctionDichotomyFragment) {
+                        fragment.container?.visibility = View.GONE
+                    }
+                }
+            }
+        }
+    }
     private fun showAnimation() {
         binding.arrowStart.visibility = View.VISIBLE
         binding.arrowMiddle.visibility = View.VISIBLE
         binding.arrowEnd.visibility = View.VISIBLE
 
-        val job = lifecycleScope.launch(Dispatchers.Main + Job()) {
+        animationJob = lifecycleScope.launch(Dispatchers.Main + Job()) {
             while (true) {
                 binding.arrowStart.alpha = 0.5f
                 binding.arrowMiddle.alpha = 0.5f
@@ -84,8 +126,20 @@ class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
                 delay(400)
             }
         }
+    }
 
+    private fun hideAnimation() {
+        binding.arrowStart.visibility = View.GONE
+        binding.arrowMiddle.visibility = View.GONE
+        binding.arrowEnd.visibility = View.GONE
+    }
 
-
+    private val specificGestureListener by lazy {
+        object : OnSwipeTouchListener(context!!) {
+            override fun onSwipeTop() {
+                hideAnimation()
+                sendData()
+            }
+        }
     }
 }

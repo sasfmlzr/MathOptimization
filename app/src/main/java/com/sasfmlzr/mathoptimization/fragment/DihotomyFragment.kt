@@ -4,40 +4,65 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import com.sasfmlzr.mathoptimization.R
 import com.sasfmlzr.mathoptimization.architecture.BaseFragment
 import com.sasfmlzr.mathoptimization.databinding.FragmentDihotomyBinding
 import com.sasfmlzr.mathoptimization.di.core.FragmentComponent
 import com.sasfmlzr.mathoptimization.di.core.Injector
 import com.sasfmlzr.mathoptimization.matchParser.MatchParser
-import java.lang.RuntimeException
 import kotlin.math.roundToLong
 
-class DihotomyFragment :  BaseFragment<DihotomyFragmentVM,
-        FragmentDihotomyBinding>(DihotomyFragmentVM::class){
-    
+class DihotomyFragment : BaseFragment<DihotomyFragmentVM,
+        FragmentDihotomyBinding>(DihotomyFragmentVM::class) {
+
     override fun getLayoutId() = R.layout.fragment_dihotomy
 
     override fun inject(component: FragmentComponent) = Injector.viewComponent().inject(this)
-    
-    override fun  onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                               savedInstanceState: Bundle?): View? {
+
+    companion object {
+        const val FUNCTION_KEY = "FUNCTION_KEY"
+        const val INTERVAL_MIN_KEY = "INTERVAL_MIN_KEY"
+        const val INTERVAL_MAX_KEY = "INTERVAL_MAX_KEY"
+        const val EPSILON_KEY = "EPSILON_KEY"
+        const val LDOP_KEY = "LDOP_KEY"
+        const val MAX_KEY = "MAX_KEY"
+
+        fun newInstance(
+            function: String,
+            intervalMin: Double,
+            intervalMax: Double,
+            epsilon: Double,
+            ldop: Double,
+            isMax: Boolean
+        ): DihotomyFragment {
+            return DihotomyFragment().apply {
+                arguments = bundleOf(
+                    Pair(FUNCTION_KEY, function),
+                    Pair(INTERVAL_MIN_KEY, intervalMin),
+                    Pair(INTERVAL_MAX_KEY, intervalMax),
+                    Pair(EPSILON_KEY, epsilon),
+                    Pair(LDOP_KEY, ldop),
+                    Pair(MAX_KEY, isMax)
+                )
+            }
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         binding.viewModel = viewModel
 
-        val function_text = arguments?.getString("function_text")?:throw RuntimeException()
-        val interval0 = arguments?.getString("interval0")?:throw RuntimeException()
-        val interval1 = arguments?.getString("interval1")?:throw RuntimeException()
-        val epsilum = arguments?.getString("epsilum")?:throw RuntimeException()
-        val ldop = arguments?.getString("ldop")?:throw RuntimeException()
-        val maxx = arguments?.getString("maxx")?:throw RuntimeException()
-        var int0 = java.lang.Double.valueOf(interval0)
-        var int1 = java.lang.Double.valueOf(interval1)
-        val eps = java.lang.Double.valueOf(epsilum)
-        val ld = java.lang.Double.valueOf(ldop)
-        val k = 0
+        val functionText = arguments?.getString(FUNCTION_KEY)!!
+        val maxx = arguments?.getBoolean(MAX_KEY)!!
+        var int0 = arguments?.getDouble(INTERVAL_MIN_KEY)!!
+        var int1 = arguments?.getDouble(INTERVAL_MAX_KEY)!!
+        val eps = arguments?.getDouble(EPSILON_KEY)!!
+        val ld = arguments?.getDouble(LDOP_KEY)!!
+
         var x: Double
         var y: Double
         var z: Double
@@ -51,7 +76,7 @@ class DihotomyFragment :  BaseFragment<DihotomyFragmentVM,
         var fz: Double
         var L_itog: Double
         var okruglenie: Double
-        val formula1 = arrayOf(function_text)
+        val formula1 = arrayOf(functionText)
         val p = MatchParser()
         p.setVariable("x", x)
         var j = 0
@@ -87,7 +112,7 @@ class DihotomyFragment :  BaseFragment<DihotomyFragmentVM,
                     binding.textView3!!.text.toString() + "\n" + "F[z" + j + "]" + formula1[i] + "=" + okruglenie
                 fz = p.parse(formula1[i])
                 println("$fy=$fz")
-                if (maxx == "false") {
+                if (!maxx) {
                     if (fy < fz) int1 = z else int0 = y
                 } else {
                     if (fy > fz) int1 = z else int0 = y
@@ -99,18 +124,19 @@ class DihotomyFragment :  BaseFragment<DihotomyFragmentVM,
                 println("L[$jj] = $L_itog")
                 if (ld < L_itog) binding.textView3!!.text =
                     binding.textView3!!.text.toString() + "\n" + "k = " + (j + 1)
-                j = j + 1
+                j += 1
                 if (j > 10) break
             } while (L_itog > ld)
             x = (int0 + int1) / 2
-            binding.textView3!!.text = binding.textView3!!.text.toString() + "Функция F(x)=" + function_text + "\n"
+            binding.textView3!!.text =
+                binding.textView3!!.text.toString() + "Функция F(x)=" + functionText + "\n"
             binding.textView3!!.text =
                 binding.textView3!!.text.toString() + "Количество вычислений равно " + jj + "\n"
             binding.textView3!!.text =
                 binding.textView3!!.text.toString() + "Количество итераций равно " + (j - 1) + "\n"
             binding.textView3!!.text =
                 binding.textView3!!.text.toString() + "Функция на отрезке [" + int0 + "," + int1 + "]" + "\n"
-            if (maxx == "false") {
+            if (!maxx) {
                 binding.textView3!!.text =
                     binding.textView3!!.text.toString() + "имеет точку минимума приблизительно \nравную " + x + "\n"
             } else {
@@ -118,9 +144,10 @@ class DihotomyFragment :  BaseFragment<DihotomyFragmentVM,
                     binding.textView3!!.text.toString() + "имеет точку максимума приблизительно \nравную " + x + "\n"
             }
             p.setVariable("x", x)
-            binding.textView3!!.text = binding.textView3!!.text.toString() + "Функция F(x)=" + p.parse(
-                formula1[i]
-            ) + "\n"
+            binding.textView3!!.text =
+                binding.textView3!!.text.toString() + "Функция F(x)=" + p.parse(
+                    formula1[i]
+                ) + "\n"
             binding.textView3!!.text = binding.textView3!!.text.toString() + "\n\n\n\n"
         } catch (e: Exception) {
             System.err.println("Error while parsing '" + formula1[i] + "' with message: " + e.message)

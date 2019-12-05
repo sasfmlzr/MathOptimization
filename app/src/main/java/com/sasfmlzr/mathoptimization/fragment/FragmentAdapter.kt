@@ -1,6 +1,8 @@
 package com.sasfmlzr.mathoptimization.fragment
 
+import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import java.lang.RuntimeException
 
@@ -20,5 +22,4 @@ class FragmentAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
             else -> throw RuntimeException("Fragment $position doesn't exist")
         }
     }
-
 }

@@ -58,7 +58,6 @@ class FunctionFragment : BaseFragment<FunctionFragmentVM,
         binding.viewModel = viewModel
 
         binding.mainPager.adapter = FragmentAdapter(this)
-
         binding.dichotomy.setOnClickListener {
             binding.mainPager.setCurrentItem(0, true)
             markDichotomyAsActive()

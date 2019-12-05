@@ -1,12 +1,13 @@
 package com.sasfmlzr.mathoptimization.custom_view
 
 import android.content.Context
+import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import com.sasfmlzr.mathoptimization.R
 import com.sasfmlzr.mathoptimization.databinding.ViewEditTextBinding
+import kotlinx.android.synthetic.main.view_edit_text.view.*
 
 class CustomEditTextView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -42,4 +43,7 @@ class CustomEditTextView @JvmOverloads constructor(
     fun setInputType(inputType: Int) {
         binder.editText.inputType = inputType
     }
+
+    val text: Editable
+        get() = edit_text.text
 }
