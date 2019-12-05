@@ -10,117 +10,171 @@
             type="com.sasfmlzr.mathoptimization.fragment.FunctionDichotomyFragmentVM" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-
-        android:id="@+id/activity_function"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="com.example.sasfm.myapplication.Function">
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/enter_function_text"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:id="@+id/activity_function"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Введите функцию f(x)"
-            android:textSize="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            tools:context="com.example.sasfm.myapplication.Function">
 
-        <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
-            android:id="@+id/enter_function"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/enter_function_text" />
+            <TextView
+                android:id="@+id/enter_function_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Введите функцию f(x)"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/interval_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Введите интервал"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/enter_function" />
+            <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
+                android:id="@+id/enter_function"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/enter_function_text" />
 
-        <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
-            android:id="@+id/interval_min"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:minHeight="43dp"
-            app:layout_constraintEnd_toStartOf="@id/interval_max"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/interval_text" />
+            <TextView
+                android:id="@+id/interval_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Введите интервал"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/enter_function" />
 
-        <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
-            android:id="@+id/interval_max"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:minHeight="43dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/interval_min"
-            app:layout_constraintTop_toTopOf="@id/interval_min" />
+            <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
+                android:id="@+id/interval_min"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:minHeight="43dp"
+                app:layout_constraintEnd_toStartOf="@id/interval_max"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/interval_text" />
 
-        <TextView
-            android:id="@+id/epsilum_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Введите ε"
-            app:layout_constraintEnd_toEndOf="@id/epsilum"
-            app:layout_constraintStart_toStartOf="@id/epsilum"
-            app:layout_constraintTop_toBottomOf="@id/interval_max" />
+            <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
+                android:id="@+id/interval_max"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:minHeight="43dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/interval_min"
+                app:layout_constraintTop_toTopOf="@id/interval_min" />
 
-        <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
-            android:id="@+id/epsilum"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toStartOf="@id/ldop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/epsilum_text" />
+            <TextView
+                android:id="@+id/epsilum_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Введите ε"
+                app:layout_constraintEnd_toEndOf="@id/epsilum"
+                app:layout_constraintStart_toStartOf="@id/epsilum"
+                app:layout_constraintTop_toBottomOf="@id/interval_max" />
 
-        <TextView
-            android:id="@+id/ldop_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Введите Lдоп"
-            app:layout_constraintEnd_toEndOf="@id/ldop"
-            app:layout_constraintStart_toStartOf="@id/ldop"
-            app:layout_constraintTop_toTopOf="@id/epsilum_text" />
+            <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
+                android:id="@+id/epsilum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toStartOf="@id/ldop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/epsilum_text" />
 
-        <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
-            android:id="@+id/ldop"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/epsilum"
-            app:layout_constraintTop_toTopOf="@id/epsilum" />
+            <TextView
+                android:id="@+id/ldop_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Введите Lдоп"
+                app:layout_constraintEnd_toEndOf="@id/ldop"
+                app:layout_constraintStart_toStartOf="@id/ldop"
+                app:layout_constraintTop_toTopOf="@id/epsilum_text" />
 
-        <Switch
-            android:id="@+id/maxx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="Max"
-            app:layout_constraintBottom_toBottomOf="@id/enter_function_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/enter_function_text" />
+            <com.sasfmlzr.mathoptimization.custom_view.CustomEditTextView
+                android:id="@+id/ldop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/epsilum"
+                app:layout_constraintTop_toTopOf="@id/epsilum" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Switch
+                android:id="@+id/maxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Max"
+                app:layout_constraintBottom_toBottomOf="@id/enter_function_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/enter_function_text" />
+
+            <ImageView
+                android:id="@+id/arrow_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_expand_more_24px"
+                android:scaleX="4"
+                android:scaleY="2"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/arrow_middle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ldop"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/arrow_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_expand_more_24px"
+                android:scaleX="5"
+                android:scaleY="2"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/arrow_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/arrow_start"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/arrow_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ic_expand_more_24px"
+                android:scaleX="6"
+                android:scaleY="2"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/arrow_middle"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </layout>
