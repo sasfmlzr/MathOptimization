@@ -25,7 +25,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
+//TEMP CLASS
+class FunctionDichotomyDFragment : BaseFragment<FunctionDichotomyFragmentVM,
         FragmentFunctionDichotomyBinding>(FunctionDichotomyFragmentVM::class) {
 
     private lateinit var animationJob: Job
@@ -61,6 +62,8 @@ class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
             val ldop = binding.ldop.text.toString().toDouble()
             val isMax = binding.maxx.isChecked
 
+
+
             childFragmentManager.beginTransaction()
                 .replace(
                    binding.root.id,
@@ -88,11 +91,11 @@ class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
 
             for (fragment in parentFragmentManager.fragments) {
                 if (fragments.size!=0 && fragment == lastFragmentWithView) {
-                    if(fragment is FunctionDichotomyFragment) {
+                    if(fragment is FunctionDichotomyDFragment) {
                         fragment.container?.visibility = View.GONE
                     }
                 } else {
-                    if(fragment is FunctionDichotomyFragment) {
+                    if(fragment is FunctionDichotomyDFragment) {
                         fragment.container?.visibility = View.VISIBLE
                     }
                 }

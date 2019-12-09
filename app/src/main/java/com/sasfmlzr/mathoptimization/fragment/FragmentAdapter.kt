@@ -17,8 +17,8 @@ class FragmentAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
     override fun createFragment(position: Int): Fragment {
         return when (position){
             0 -> FunctionDichotomyFragment()
-            1 -> FunctionFragmentOld()
-            2 -> FunctionFragmentOld()
+            1 -> FunctionDichotomyDFragment()
+            2 -> FunctionDichotomyDDFragment()
             else -> throw RuntimeException("Fragment $position doesn't exist")
         }
     }

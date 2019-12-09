@@ -11,6 +11,9 @@ interface FragmentComponent {
     fun inject(fragment: FibonacciFragment)
     fun inject(fragment: FunctionFragment)
     fun inject(fragment: FunctionDichotomyFragment)
+    fun inject(fragment: FunctionDichotomyDFragment)
+    fun inject(fragment: FunctionDichotomyDDFragment)
+
     fun inject(fragment: UnimodalFragment)
     fun inject(fragment: ZolotoFragment)
     fun inject(fragment: FunctionFragmentOld)
