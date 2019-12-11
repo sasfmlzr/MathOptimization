@@ -8,16 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.lifecycleScope
 import com.sasfmlzr.mathoptimization.R
 import com.sasfmlzr.mathoptimization.architecture.BaseFragment
 import com.sasfmlzr.mathoptimization.architecture.OnSwipeTouchListener
-import com.sasfmlzr.mathoptimization.databinding.FragmentDihotomyBinding
 import com.sasfmlzr.mathoptimization.databinding.FragmentFunctionDichotomyBinding
 import com.sasfmlzr.mathoptimization.di.core.FragmentComponent
 import com.sasfmlzr.mathoptimization.di.core.Injector
-import kotlinx.android.synthetic.main.fragment_function.*
 import kotlinx.android.synthetic.main.fragment_function_dichotomy.*
 import kotlinx.android.synthetic.main.view_edit_text.view.*
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 //TEMP CLASS
-class FunctionDichotomyDFragment : BaseFragment<FunctionDichotomyFragmentVM,
+class FunctionDichotomyGoldenFragment : BaseFragment<FunctionDichotomyFragmentVM,
         FragmentFunctionDichotomyBinding>(FunctionDichotomyFragmentVM::class) {
 
     private lateinit var animationJob: Job
@@ -91,18 +88,17 @@ class FunctionDichotomyDFragment : BaseFragment<FunctionDichotomyFragmentVM,
 
             for (fragment in parentFragmentManager.fragments) {
                 if (fragments.size!=0 && fragment == lastFragmentWithView) {
-                    if(fragment is FunctionDichotomyDFragment) {
+                    if(fragment is FunctionDichotomyGoldenFragment) {
                         fragment.container?.visibility = View.GONE
                     }
                 } else {
-                    if(fragment is FunctionDichotomyDFragment) {
+                    if(fragment is FunctionDichotomyGoldenFragment) {
                         fragment.container?.visibility = View.VISIBLE
                     }
                 }
             }
         }
     }
-
     private fun showAnimation() {
         binding.arrowStart.visibility = View.VISIBLE
         binding.arrowMiddle.visibility = View.VISIBLE

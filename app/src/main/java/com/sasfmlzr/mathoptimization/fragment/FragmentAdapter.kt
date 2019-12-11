@@ -1,8 +1,6 @@
 package com.sasfmlzr.mathoptimization.fragment
 
-import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import java.lang.RuntimeException
 
@@ -17,8 +15,8 @@ class FragmentAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
     override fun createFragment(position: Int): Fragment {
         return when (position){
             0 -> FunctionDichotomyFragment()
-            1 -> FunctionDichotomyDFragment()
-            2 -> FunctionDichotomyDDFragment()
+            1 -> FunctionDichotomyFibonacciFragment()
+            2 -> FunctionDichotomyGoldenFragment()
             else -> throw RuntimeException("Fragment $position doesn't exist")
         }
     }

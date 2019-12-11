@@ -11,6 +11,8 @@ import com.sasfmlzr.mathoptimization.databinding.FragmentDihotomyBinding
 import com.sasfmlzr.mathoptimization.di.core.FragmentComponent
 import com.sasfmlzr.mathoptimization.di.core.Injector
 import com.sasfmlzr.mathoptimization.matchParser.MatchParser
+import kotlin.math.abs
+import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
 class DihotomyFragment : BaseFragment<DihotomyFragmentVM,
@@ -74,7 +76,7 @@ class DihotomyFragment : BaseFragment<DihotomyFragmentVM,
         var vivod: String
         var fy: Double
         var fz: Double
-        var L_itog: Double
+        var lItog: Double
         var okruglenie: Double
         val formula1 = arrayOf(functionText)
         val p = MatchParser()
@@ -82,16 +84,18 @@ class DihotomyFragment : BaseFragment<DihotomyFragmentVM,
         var j = 0
         var jj = 0
         val i = 0
+
+        val resultStr = StringBuilder()
         try {
             do {
                 y = (int0 + int1 - eps) / 2
                 z = (int0 + int1 + eps) / 2
-                okruglenie = Math.round(y * 1000).toDouble() / 1000
-                binding.textView3!!.text =
-                    binding.textView3!!.text.toString() + "\n" + "y[" + j + "]=" + okruglenie
+                okruglenie = (y * 1000).roundToInt().toDouble() / 1000
+                resultStr.append("\ny[$j]=$okruglenie")
+
                 okruglenie = (z * 1000).roundToLong().toDouble() / 1000
-                binding.textView3!!.text =
-                    binding.textView3!!.text.toString() + "\n" + "z[" + j + "]=" + okruglenie
+
+                resultStr.append("\nz[$j]=$okruglenie")
                 println("y[$j] = $y")
                 println("z[$j] = $z")
                 jj += 2
@@ -99,17 +103,16 @@ class DihotomyFragment : BaseFragment<DihotomyFragmentVM,
                 p.setVariable("x", x)
                 vivod = formula1[i] + "=" + p.parse(formula1[i])
                 okruglenie =
-                    Math.round(p.parse(formula1[i]) * 1000).toDouble() / 1000
-                binding.textView3!!.text =
-                    binding.textView3!!.text.toString() + "\n" + "F[y" + j + "]" + formula1[i] + "=" + okruglenie
+                    (p.parse(formula1[i]) * 1000).roundToInt().toDouble() / 1000
+                resultStr.append("\nF[y$j]${formula1[i]}=$okruglenie")
+
                 println(vivod + "=" + p.parse(formula1[i]))
                 fy = p.parse(formula1[i])
                 x = z
                 p.setVariable("x", x)
                 okruglenie =
-                    Math.round(p.parse(formula1[i]) * 1000).toDouble() / 1000
-                binding.textView3!!.text =
-                    binding.textView3!!.text.toString() + "\n" + "F[z" + j + "]" + formula1[i] + "=" + okruglenie
+                    (p.parse(formula1[i]) * 1000).roundToInt().toDouble() / 1000
+                resultStr.append("\nF[z$j]${formula1[i]}=$okruglenie")
                 fz = p.parse(formula1[i])
                 println("$fy=$fz")
                 if (!maxx) {
@@ -117,38 +120,30 @@ class DihotomyFragment : BaseFragment<DihotomyFragmentVM,
                 } else {
                     if (fy > fz) int1 = z else int0 = y
                 }
-                L_itog = Math.abs(int1 - int0)
-                okruglenie = Math.round(L_itog * 1000).toDouble() / 1000
-                binding.textView3!!.text =
-                    binding.textView3!!.text.toString() + "\n" + "L[" + jj + "] = " + okruglenie + "\n"
-                println("L[$jj] = $L_itog")
-                if (ld < L_itog) binding.textView3!!.text =
-                    binding.textView3!!.text.toString() + "\n" + "k = " + (j + 1)
+                lItog = abs(int1 - int0)
+                okruglenie = (lItog * 1000).roundToInt().toDouble() / 1000
+                resultStr.append("\nL[$jj] = $okruglenie\n")
+                println("L[$jj] = $lItog")
+                resultStr.append("\n" + "k = " + (j + 1))
                 j += 1
                 if (j > 10) break
-            } while (L_itog > ld)
+            } while (lItog > ld)
             x = (int0 + int1) / 2
-            binding.textView3!!.text =
-                binding.textView3!!.text.toString() + "Функция F(x)=" + functionText + "\n"
-            binding.textView3!!.text =
-                binding.textView3!!.text.toString() + "Количество вычислений равно " + jj + "\n"
-            binding.textView3!!.text =
-                binding.textView3!!.text.toString() + "Количество итераций равно " + (j - 1) + "\n"
-            binding.textView3!!.text =
-                binding.textView3!!.text.toString() + "Функция на отрезке [" + int0 + "," + int1 + "]" + "\n"
+            resultStr.append("\nФункция F(x)=$functionText\n")
+            resultStr.append("Количество вычислений равно $jj\n")
+            resultStr.append("Количество итераций равно " + (j - 1) + "\n")
+            resultStr.append("Функция на отрезке [$int0,$int1]\n")
             if (!maxx) {
-                binding.textView3!!.text =
-                    binding.textView3!!.text.toString() + "имеет точку минимума приблизительно \nравную " + x + "\n"
+                resultStr.append("имеет точку минимума приблизительно \nравную $x\n")
             } else {
-                binding.textView3!!.text =
-                    binding.textView3!!.text.toString() + "имеет точку максимума приблизительно \nравную " + x + "\n"
+                resultStr.append("имеет точку максимума приблизительно \nравную $x\n")
             }
             p.setVariable("x", x)
-            binding.textView3!!.text =
-                binding.textView3!!.text.toString() + "Функция F(x)=" + p.parse(
-                    formula1[i]
-                ) + "\n"
-            binding.textView3!!.text = binding.textView3!!.text.toString() + "\n\n\n\n"
+            resultStr.append("Функция F(x)=" + p.parse(
+                formula1[i]
+            ) + "\n\n\n\n")
+
+            binding.textView3!!.text = resultStr.toString()
         } catch (e: Exception) {
             System.err.println("Error while parsing '" + formula1[i] + "' with message: " + e.message)
         }
