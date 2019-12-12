@@ -1,5 +1,6 @@
 package com.sasfmlzr.mathoptimization.matchParser
 
+import java.lang.RuntimeException
 import java.util.*
 import kotlin.math.*
 
@@ -11,8 +12,7 @@ class MatchParser {
 
     private fun getVariable(variableName: String): Double? {
         if (!variables.containsKey(variableName)) {
-            System.err.println("Error: Try get unexists variable '$variableName'")
-            return 0.0
+            throw RuntimeException ("Error: Try get unexists variable '$variableName'")
         }
         return variables[variableName]
     }
@@ -20,8 +20,8 @@ class MatchParser {
     fun parse(s: String): Double {
         val result = plusMinus(s)
         if (result.rest.isNotEmpty()) {
-            System.err.println("Error: can't full parse")
             System.err.println("rest: " + result.rest)
+            throw RuntimeException ("Error: can't full parse")
         }
         return result.acc
     }
@@ -50,7 +50,7 @@ class MatchParser {
             if (r.rest.isNotEmpty() && r.rest[0] == ')') {
                 r.rest = r.rest.substring(1)
             } else {
-                System.err.println("Error: not close bracket")
+                throw RuntimeException("Error: not close bracket")
             }
             return r
         }
@@ -205,5 +205,4 @@ class MatchParser {
         }
         return r
     }
-
 }

@@ -61,24 +61,42 @@ class MatchParserOld {
         var f = ""
         var i = 0
         // ищем название функции или переменной
-// имя обязательно должна начинаться с буквы
-        while (i < s.length && (Character.isLetter(s[i]) || Character.isDigit(
-                s[i]
+        // имя обязательно должна начинаться с буквы
+
+        var funcStr = s
+
+        var negative = false
+        // число также может начинаться с минуса
+        if (funcStr[0] == '-') {
+            negative = true
+            funcStr = funcStr.substring(1)
+        }
+
+        while (i < funcStr.length && (Character.isLetter(funcStr[i]) || Character.isDigit(
+                funcStr[i]
             ) && i > 0)
         ) {
-            f += s[i]
+            f += funcStr[i]
             i++
         }
         return if (f.isNotEmpty()) { // если что-нибудь нашли
-            if (s.length > i && s[i] == '(') { // и следующий символ скобка значит - это функция
+            if (funcStr.length > i && funcStr[i] == '(') { // и следующий символ скобка значит - это функция
                 val r =
-                    bracket(s.substring(f.length))
+                    bracket(funcStr.substring(f.length))
                 processFunction(f, r)
             } else { // иначе - это переменная
-                Result(
-                    getVariable(f)!!,
-                    s.substring(f.length)
-                )
+                if (negative) {
+                    Result(
+                        -getVariable(f)!!,
+                        funcStr.substring(f.length)
+                    )
+                } else {
+                    Result(
+                        getVariable(f)!!,
+                        funcStr.substring(f.length)
+                    )
+                }
+
             }
         } else num(s)
     }
@@ -134,8 +152,7 @@ class MatchParserOld {
     private fun processFunction(
         func: String,
         r: Result
-    ): Result { //  Result current = Bracket(r);
-//  String next = current.rest.substring(1);
+    ): Result {
         when (func) {
             "sin" -> {
                 return Result(
