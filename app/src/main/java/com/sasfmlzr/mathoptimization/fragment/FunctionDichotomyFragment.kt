@@ -6,18 +6,17 @@ import android.text.InputType.TYPE_NUMBER_FLAG_SIGNED
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.lifecycleScope
 import com.sasfmlzr.mathoptimization.R
 import com.sasfmlzr.mathoptimization.architecture.BaseFragment
 import com.sasfmlzr.mathoptimization.architecture.OnSwipeTouchListener
-import com.sasfmlzr.mathoptimization.databinding.FragmentDihotomyBinding
 import com.sasfmlzr.mathoptimization.databinding.FragmentFunctionDichotomyBinding
 import com.sasfmlzr.mathoptimization.di.core.FragmentComponent
 import com.sasfmlzr.mathoptimization.di.core.Injector
-import kotlinx.android.synthetic.main.fragment_function.*
+import com.sasfmlzr.mathoptimization.matchParser.MatchParser
 import kotlinx.android.synthetic.main.fragment_function_dichotomy.*
 import kotlinx.android.synthetic.main.view_edit_text.view.*
 import kotlinx.coroutines.Dispatchers
@@ -46,6 +45,17 @@ class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
         binding.epsilum.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER + TYPE_NUMBER_FLAG_SIGNED)
         binding.ldop.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL + InputType.TYPE_CLASS_NUMBER + TYPE_NUMBER_FLAG_SIGNED)
 
+        binding.enterFunction.edit_text.addTextChangedListener {
+            try {
+                binding.enterFunction.hideError()
+                val parser = MatchParser()
+                parser.setVariable("x", 0.0)
+                parser.parse(it.toString())
+            } catch (e: Exception) {
+                binding.enterFunction.showError(e.message ?: "Something was wrong")
+            }
+        }
+
         showAnimation()
         childFragmentManager.setupForAccessibility()
         binding.scroll.setOnTouchListener(specificGestureListener)
@@ -63,7 +73,7 @@ class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
 
             childFragmentManager.beginTransaction()
                 .replace(
-                   binding.root.id,
+                    binding.root.id,
                     DihotomyFragment.newInstance(
                         function,
                         intervalMin,
@@ -87,12 +97,12 @@ class FunctionDichotomyFragment : BaseFragment<FunctionDichotomyFragmentVM,
             val lastFragmentWithView = parentFragmentManager.fragments.last { it.isVisible }
 
             for (fragment in parentFragmentManager.fragments) {
-                if (fragments.size!=0 && fragment == lastFragmentWithView) {
-                    if(fragment is FunctionDichotomyFragment) {
+                if (fragments.size != 0 && fragment == lastFragmentWithView) {
+                    if (fragment is FunctionDichotomyFragment) {
                         fragment.container?.visibility = View.GONE
                     }
                 } else {
-                    if(fragment is FunctionDichotomyFragment) {
+                    if (fragment is FunctionDichotomyFragment) {
                         fragment.container?.visibility = View.VISIBLE
                     }
                 }
